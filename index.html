@@ -1,104 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+REPLACE YOUR CURRENT index.html WITH THE SAME FILE YOU POSTED, BUT ADD THE FOLLOWING APPOINTMENT BOOKING SECTION IMMEDIATELY AFTER:
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABC Digital Solutions</title>
+<p id="result"></p>
 
-<style>
+AND BEFORE:
 
-body{
-    margin:0;
-    padding:20px;
-    font-family:Arial, sans-serif;
-    background:#f5f5f5;
-}
+</div>
 
-.container{
-    max-width:700px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
+PASTE THIS:
 
-h1{
-    text-align:center;
-}
+<hr>
 
-.subtitle{
-    text-align:center;
-    margin-bottom:30px;
-}
+<h2>Book an Appointment</h2>
 
-h2{
-    text-align:center;
-}
+<form id="bookingForm">
 
-label{
-    font-weight:bold;
-}
+<label>Name</label> <input type="text" id="b_name" required>
 
-input,
-select,
-textarea{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    margin-bottom:15px;
-    box-sizing:border-box;
-}
+<label>Email</label> <input type="email" id="b_email" required>
 
-button{
-    width:100%;
-    padding:15px;
-    font-size:16px;
-    cursor:pointer;
-}
+<label>Contact Number</label> <input type="tel" id="b_phone" required>
 
-#result{
-    text-align:center;
-    margin-top:20px;
-    font-weight:bold;
-}
+<label>Service Required</label> <select id="b_service">
 
-footer{
-    text-align:center;
-    margin-top:30px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>ABC Digital Solutions</h1>
-
-<p class="subtitle">
-Helping businesses with Website Development,
-AI Automation, SEO Services and Digital Marketing.
-</p>
-
-<h2>Contact Us</h2>
-
-<form id="form">
-
-<label>Name</label>
-<input type="text" id="name" required>
-
-<label>Email</label>
-<input type="email" id="email" required>
-
-<label>Contact Number</label>
-<input type="tel" id="phone" required>
-
-<label>Service Required</label>
-<select id="service">
 <option>Website Development</option>
 <option>AI Automation</option>
 <option>SEO Services</option>
@@ -106,80 +29,62 @@ AI Automation, SEO Services and Digital Marketing.
 <option>General Enquiry</option>
 </select>
 
-<label>Estimated Budget</label>
-<select id="budget">
-<option>Less than £500</option>
-<option>£500 - £1,000</option>
-<option>£1,000 - £5,000</option>
-<option>More than £5,000</option>
-</select>
+<label>Preferred Date</label> <input type="date" id="b_date" required>
 
-<label>Message</label>
-<textarea
-id="message"
-rows="5"
-placeholder="Tell us about your project..."
-required></textarea>
+<label>Preferred Time</label> <input type="time" id="b_time" required>
 
 <button type="submit">
-Send Your Enquiry
+Book Appointment
 </button>
 
 </form>
 
-<p id="result"></p>
+<p id="bookingResult"></p>
 
-</div>
+THEN INSIDE YOUR EXISTING <script> SECTION, ADD THIS CODE BEFORE THE FINAL:
 
-<footer>
-<hr>
-<p>© 2026 ABC Digital Solutions</p>
-</footer>
+</script>
 
-<script>
+CODE TO ADD:
 
-const webhook = "https://hook.eu1.make.com/qft9kyg17rma9fkqc9pn4hcpmf14h70b";
+const bookingWebhook =
+"https://hook.eu1.make.com/bx7ovn5wnjt9e20hkj08nkcjqx3c6blf";
 
-document.getElementById("form").onsubmit = async function(event){
+document.getElementById("bookingForm").onsubmit =
+async function(event){
 
 event.preventDefault();
 
 try{
 
-await fetch(webhook,{
+await fetch(bookingWebhook,{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
 
-name:document.getElementById("name").value,
-email:document.getElementById("email").value,
-phone:document.getElementById("phone").value,
-service:document.getElementById("service").value,
-budget:document.getElementById("budget").value,
-message:document.getElementById("message").value
+name:document.getElementById("b_name").value,
+email:document.getElementById("b_email").value,
+phone:document.getElementById("b_phone").value,
+service:document.getElementById("b_service").value,
+date:document.getElementById("b_date").value,
+time:document.getElementById("b_time").value
 
 })
 });
 
-document.getElementById("result").innerHTML =
-"✅ Thank you! Your enquiry has been sent successfully.";
+document.getElementById("bookingResult").innerHTML =
+"✅ Appointment request submitted successfully.";
 
-document.getElementById("form").reset();
+document.getElementById("bookingForm").reset();
 
 }
 catch(error){
 
-document.getElementById("result").innerHTML =
+document.getElementById("bookingResult").innerHTML =
 "❌ Something went wrong. Please try again.";
 
 }
 
 };
-
-</script>
-
-</body>
-
-</html>
